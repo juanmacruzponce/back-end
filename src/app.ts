@@ -1,5 +1,5 @@
 import express, {NextFunction, Request, Response} from "express";
-import { Medico } from "./medico.js";
+import { Medico } from "./medico/medico.entity.js";
 import { it } from 'node:test'
 
 const app =  express()
