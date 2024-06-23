@@ -1,0 +1,43 @@
+### 
+GET http://localhost:3000/api/medicos
+
+
+### 
+GET http://localhost:3000/api/medicos/3333
+
+### 
+POST http://localhost:3000/api/medicos
+Content-Type: application/json
+
+{
+    "apellido": "ape",
+    "nombre": "nom",
+    "dni": "123",
+    "matricula": "333",
+    "especialidad": "sas"
+}
+
+### 
+PUT http://localhost:3000/api/medicos/333
+Content-Type: application/json
+
+{
+    "apellido": "sas",
+    "nombre": "sos",
+    "dni": "1234",
+    "especialidad": "sas"    
+}
+
+### 
+PATCH http://localhost:3000/api/medicos/3333
+Content-Type: application/json
+
+{
+    "apellido": "sasos",
+    "nombre": "das",
+    "dni": "1234",
+    "especialidad": "nashe"  
+}
+
+### 
+DELETE http://localhost:3000/api/medicos/333

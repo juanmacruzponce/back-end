@@ -4,8 +4,8 @@ import { sanitizeMedicoInput, findAll, findOne, add, update, remove } from './me
 export const medicoRouter = Router()
 
 medicoRouter.get('/', findAll)
-medicoRouter.get('/:id', findOne)
+medicoRouter.get('/:matricula', findOne)
 medicoRouter.post('/', sanitizeMedicoInput, add)
-medicoRouter.put('/:id', sanitizeMedicoInput, update)
-medicoRouter.patch('/:id', sanitizeMedicoInput, update)
-medicoRouter.delete('/:id', remove)
+medicoRouter.put('/:matricula', sanitizeMedicoInput, update)
+medicoRouter.patch('/:matricula', sanitizeMedicoInput, update)
+medicoRouter.delete('/:matricula', remove)
