@@ -1,3 +1,5 @@
+import { ObjectId } from 'mongodb'
+
 export class Medico{
     constructor(
         public apellido: string,
@@ -5,5 +7,6 @@ export class Medico{
         public dni: string,
         public matricula: string,
         public especialidad: string,
+        public _id?: ObjectId,
     ){}
 }

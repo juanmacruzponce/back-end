@@ -16,34 +16,33 @@ function sanitizeMedicoInput(req, res, next) {
     });
     next();
 }
-function findAll(req, res) {
-    res.json({ data: repository.findAll() });
+async function findAll(req, res) {
+    res.json({ data: await repository.findAll() });
 }
-function findOne(req, res) {
+async function findOne(req, res) {
     const matricula = req.params.matricula;
-    const medico = repository.findOne({ matricula });
+    const medico = await repository.findOne({ matricula });
     if (!medico) {
         return res.status(404).send({ message: 'Medico not found' });
     }
     res.json({ data: medico });
 }
-function add(req, res) {
+async function add(req, res) {
     const input = req.body.sanitizedInput;
     const medicoInput = new Medico(input.apellido, input.nombre, input.dni, input.matricula, input.especialidad);
-    const medico = repository.add(medicoInput);
+    const medico = await repository.add(medicoInput);
     return res.status(201).send({ message: 'medico created', data: medico });
 }
-function update(req, res) {
-    req.body.sanitizedInput.matricula = req.params.matricula;
-    const medico = repository.update(req.body.sanitizedInput);
+async function update(req, res) {
+    const medico = await repository.update(req.params.matriucla, req.body.sanitizedInput);
     if (!medico) {
         return res.status(404).send({ message: 'medico not found' });
     }
     return res.status(200).send({ message: 'medico updated successfully', data: medico });
 }
-function remove(req, res) {
+async function remove(req, res) {
     const matricula = req.params.matricula;
-    const medico = repository.delete({ matricula });
+    const medico = await repository.delete({ matricula });
     if (!medico) {
         res.status(404).send({ message: 'medico not found' });
     }

@@ -1,32 +1,25 @@
-import { Medico } from './medico.entity.js';
-const medicos = [
-    new Medico('Apellido', 'Nombre', '12222', '3333', 'traumatologo'),
-];
+import { db } from '../shared/db/connect.js';
+import { ObjectId } from 'mongodb';
+const medicos = db.collection('medicos');
 export class MedicoRepository {
-    findAll() {
-        return medicos;
+    async findAll() {
+        return await medicos.find().toArray();
     }
-    findOne(item) {
-        return medicos.find((medico) => medico.matricula === item.matricula);
+    async findOne(item) {
+        const _id = new ObjectId(item.matricula);
+        return (await medicos.findOne({ _id })) || undefined;
     }
-    add(item) {
-        medicos.push(item);
+    async add(item) {
+        item._id = (await medicos.insertOne(item)).insertedId;
         return item;
     }
-    update(item) {
-        const medicomatriculax = medicos.findIndex((medico) => medico.matricula === item.matricula);
-        if (medicomatriculax !== -1) {
-            medicos[medicomatriculax] = { ...medicos[medicomatriculax], ...item };
-        }
-        return medicos[medicomatriculax];
+    async update(matricula, item) {
+        const _id = new ObjectId(matricula);
+        return (await medicos.findOneAndUpdate({ _id }, { $set: item }, { returnDocument: 'after' })) || undefined;
     }
-    delete(item) {
-        const Medicomatriculax = medicos.findIndex((medico) => medico.matricula === item.matricula);
-        if (Medicomatriculax !== -1) {
-            const deletedMedicos = medicos[Medicomatriculax];
-            medicos.splice(Medicomatriculax, 1);
-            return deletedMedicos;
-        }
+    async delete(item) {
+        const _id = new ObjectId(item.matricula);
+        return (await medicos.findOneAndDelete({ _id })) || undefined;
     }
 }
 //# sourceMappingURL=medico.repository.js.map

@@ -1,46 +1,32 @@
 import { Repository } from '../shared/repository.js'
 import { Medico } from './medico.entity.js'
+import { db } from '../shared/db/connect.js'
+import { ObjectId } from 'mongodb'
 
-const medicos = [
-    new Medico(
-      'Apellido',
-      'Nombre',
-      '12222',
-      '3333',
-      'traumatologo'
-    ),
-  ]
+const medicos = db.collection<Medico>('medicos')
 
 export class MedicoRepository implements Repository<Medico> {
-  public findAll(): Medico[] | undefined {
-    return medicos
+  public async findAll(): Promise<Medico[] | undefined> {
+    return await medicos.find().toArray()
   }
 
-  public findOne(item: { matricula: string }): Medico | undefined {
-    return medicos.find((medico) => medico.matricula === item.matricula)
+  public async findOne(item: { matricula: string }): Promise<Medico | undefined> {
+    const _id = new ObjectId(item.matricula)
+    return (await medicos.findOne({ _id })) || undefined
   }
 
-  public add(item: Medico): Medico | undefined {
-    medicos.push(item)
+  public async add(item: Medico): Promise<Medico | undefined> {
+    item._id = (await medicos.insertOne(item)).insertedId
     return item
   }
 
-  public update(item: Medico): Medico | undefined {
-    const medicomatriculax = medicos.findIndex((medico) => medico.matricula === item.matricula)
-
-    if  (medicomatriculax !== -1) {
-     medicos[medicomatriculax] = { ... medicos[medicomatriculax], ...item }
-    }
-    return medicos[medicomatriculax]
+  public async update(matricula: string, item: Medico): Promise<Medico | undefined> {
+    const _id = new ObjectId(matricula)
+    return (await medicos.findOneAndUpdate({ _id }, { $set: item }, { returnDocument: 'after' })) || undefined
   }
 
-  public delete(item: { matricula: string }): Medico | undefined {
-    const Medicomatriculax = medicos.findIndex((medico) => medico.matricula === item.matricula)
-
-    if  (Medicomatriculax !== -1) {
-        const deletedMedicos = medicos[Medicomatriculax]
-        medicos.splice(Medicomatriculax, 1)
-        return deletedMedicos
-    }
+  public async delete(item: { matricula: string }): Promise<Medico | undefined> {
+    const _id = new ObjectId(item.matricula)
+    return (await medicos.findOneAndDelete({ _id })) || undefined
   }
 }

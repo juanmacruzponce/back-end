@@ -3,7 +3,7 @@ GET http://localhost:3000/api/medicos
 
 
 ### 
-GET http://localhost:3000/api/medicos/3333
+GET http://localhost:3000/api/medicos/667c173c6ff7e0656ef5b8fc
 
 ### 
 POST http://localhost:3000/api/medicos
@@ -18,7 +18,7 @@ Content-Type: application/json
 }
 
 ### 
-PUT http://localhost:3000/api/medicos/333
+PUT http://localhost:3000/api/medicos/667c173c6ff7e0656ef5b8fc
 Content-Type: application/json
 
 {
@@ -29,7 +29,7 @@ Content-Type: application/json
 }
 
 ### 
-PATCH http://localhost:3000/api/medicos/3333
+PATCH http://localhost:3000/api/medicos/667c173c6ff7e0656ef5b8fc
 Content-Type: application/json
 
 {
@@ -40,4 +40,4 @@ Content-Type: application/json
 }
 
 ### 
-DELETE http://localhost:3000/api/medicos/333
+DELETE http://localhost:3000/api/medicos/667c173c6ff7e0656ef5b8fc
