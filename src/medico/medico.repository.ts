@@ -10,8 +10,8 @@ export class MedicoRepository implements Repository<Medico> {
     return await medicos.find().toArray()
   }
 
-  public async findOne(item: { matricula: string }): Promise<Medico | undefined> {
-    const _id = new ObjectId(item.matricula)
+  public async findOne(item: { id: string }): Promise<Medico | undefined> {
+    const _id = new ObjectId(item.id)
     return (await medicos.findOne({ _id })) || undefined
   }
 
@@ -20,13 +20,13 @@ export class MedicoRepository implements Repository<Medico> {
     return item
   }
 
-  public async update(matricula: string, item: Medico): Promise<Medico | undefined> {
-    const _id = new ObjectId(matricula)
+  public async update(id: string, item: Medico): Promise<Medico | undefined> {
+    const _id = new ObjectId(id)
     return (await medicos.findOneAndUpdate({ _id }, { $set: item }, { returnDocument: 'after' })) || undefined
   }
 
-  public async delete(item: { matricula: string }): Promise<Medico | undefined> {
-    const _id = new ObjectId(item.matricula)
+  public async delete(item: { id: string }): Promise<Medico | undefined> {
+    const _id = new ObjectId(item.id)
     return (await medicos.findOneAndDelete({ _id })) || undefined
   }
 }

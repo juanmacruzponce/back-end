@@ -6,19 +6,19 @@ export class MedicoRepository {
         return await medicos.find().toArray();
     }
     async findOne(item) {
-        const _id = new ObjectId(item.matricula);
+        const _id = new ObjectId(item.id);
         return (await medicos.findOne({ _id })) || undefined;
     }
     async add(item) {
         item._id = (await medicos.insertOne(item)).insertedId;
         return item;
     }
-    async update(matricula, item) {
-        const _id = new ObjectId(matricula);
+    async update(id, item) {
+        const _id = new ObjectId(id);
         return (await medicos.findOneAndUpdate({ _id }, { $set: item }, { returnDocument: 'after' })) || undefined;
     }
     async delete(item) {
-        const _id = new ObjectId(item.matricula);
+        const _id = new ObjectId(item.id);
         return (await medicos.findOneAndDelete({ _id })) || undefined;
     }
 }
