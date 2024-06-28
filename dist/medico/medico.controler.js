@@ -20,8 +20,8 @@ async function findAll(req, res) {
     res.json({ data: await repository.findAll() });
 }
 async function findOne(req, res) {
-    const matricula = req.params.matricula;
-    const medico = await repository.findOne({ matricula });
+    const id = req.params.matricula;
+    const medico = await repository.findOne({ id });
     if (!medico) {
         return res.status(404).send({ message: 'Medico not found' });
     }
@@ -41,8 +41,8 @@ async function update(req, res) {
     return res.status(200).send({ message: 'medico updated successfully', data: medico });
 }
 async function remove(req, res) {
-    const matricula = req.params.matricula;
-    const medico = await repository.delete({ matricula });
+    const id = req.params.matricula;
+    const medico = await repository.delete({ id });
     if (!medico) {
         res.status(404).send({ message: 'medico not found' });
     }
